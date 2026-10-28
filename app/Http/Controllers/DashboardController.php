@@ -1,0 +1,4 @@
+<?php
+namespace App\Http\Controllers;
+use App\Models\{SalesInvoice,PurchaseInvoice,Budget,Expense}; use Illuminate\Support\Facades\Http; use Illuminate\Support\Facades\Cache;
+class DashboardController extends Controller { public function __invoke(){ $rates=Cache::remember('currency.rates',now()->addMinutes((int)config('services.currency.cache_ttl',60)),function(){try{return Http::timeout((int)config('services.currency.timeout',5))->get(config('services.currency.url'))->json();}catch(\Throwable){return null;}}); return view('dashboard', ['sales'=>SalesInvoice::sum('total'),'purchases'=>PurchaseInvoice::sum('total'),'expenses'=>Expense::sum('amount'),'outstanding'=>SalesInvoice::whereIn('status',['Pending','Overdue'])->sum('total'),'budgets'=>Budget::with('expenses')->latest()->take(5)->get(),'rates'=>$rates]);} }
