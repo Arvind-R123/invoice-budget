@@ -16,7 +16,7 @@ npm run build
 php artisan serve
 ```
 
-Set `DB_CONNECTION=mysql` and the normal `DB_*` variables for MySQL. Admin seed credentials come from `ADMIN_NAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD`. Currency integration uses `CURRENCY_API_URL`, `CURRENCY_API_TIMEOUT`, and `CURRENCY_API_CACHE_TTL`; failures are handled with a dashboard fallback.
+Set `DB_CONNECTION=mysql` and the normal `DB_*` variables for MySQL. Admin seed credentials come from `ADMIN_NAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD`. Currency integration uses `CURRENCY_API_URL=https://api.frankfurter.dev/v1/latest?base=USD`, `CURRENCY_API_TIMEOUT`, and `CURRENCY_API_CACHE_TTL`; failures are handled with a dashboard fallback. Windows users seeing cURL error 60 should set `curl.cainfo` in `php.ini` to the path of a downloaded `cacert.pem` file.
 
 Run tests with `php artisan test`.
 

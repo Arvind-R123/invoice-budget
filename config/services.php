@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'currency' => ['url' => env('CURRENCY_API_URL', 'https://api.frankfurter.app/latest?from=USD'), 'timeout' => env('CURRENCY_API_TIMEOUT', 5), 'cache_ttl' => env('CURRENCY_API_CACHE_TTL', 60)],
+    'currency' => ['url' => env('CURRENCY_API_URL', 'https://api.frankfurter.dev/v1/latest?base=USD'), 'timeout' => env('CURRENCY_API_TIMEOUT', 5), 'cache_ttl' => env('CURRENCY_API_CACHE_TTL', 60)],
 
     /*
     |--------------------------------------------------------------------------
