@@ -26,7 +26,7 @@ Laravel, PHP 8.4, MySQL, Blade, Bootstrap 5 CDN, PHPUnit, and Frankfurter.
 6. Run `php artisan migrate:fresh --seed`.
 7. Start the application with `php artisan serve`.
 
-Seeded admin credentials: `admin@example.com` / `password`. These can be changed with `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `ADMIN_NAME`.
+Seeded admin credentials: `admin@example.com` / `ChangeMe123!`. These can be changed with `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `ADMIN_NAME`.
 
 ## Database tables
 
