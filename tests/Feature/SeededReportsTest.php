@@ -1,0 +1,4 @@
+<?php
+namespace Tests\Feature;
+use App\Models\User; use Database\Seeders\DatabaseSeeder; use Illuminate\Foundation\Testing\RefreshDatabase; use Tests\TestCase;
+class SeededReportsTest extends TestCase { use RefreshDatabase; public function test_seeded_data_populates_every_report_dataset(): void { $this->seed(DatabaseSeeder::class);$response=$this->actingAs(User::first())->get(route('reports.index',['from'=>now()->subYear()->toDateString(),'to'=>now()->toDateString()]));$response->assertOk()->assertSee('Sales vs Purchases by month');$this->assertGreaterThanOrEqual(8,\App\Models\SalesInvoice::count());$this->assertGreaterThanOrEqual(8,\App\Models\PurchaseInvoice::count());$this->assertGreaterThanOrEqual(4,\App\Models\Expense::query()->distinct('category')->count('category'));$this->assertStringContainsString('Marketing',$response->getContent());$this->assertStringContainsString('Bharat Traders',$response->getContent());} }
