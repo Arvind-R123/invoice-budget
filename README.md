@@ -45,7 +45,3 @@ Run the test suite with:
 ```bash
 php artisan test
 ```
-
-## Development notes
-
-AI assistance was used during development for UI polish, regression tests, and documentation.
