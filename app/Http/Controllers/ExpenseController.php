@@ -18,11 +18,13 @@ class ExpenseController extends Controller
                 $query->where('description', 'like', '%'.$request->string('search').'%')
                     ->orWhere('category', 'like', '%'.$request->string('search').'%');
             }))
-            ->latest('expense_date')
-            ->paginate(15)
-            ->withQueryString();
+            ->when($request->filled('budget_id'), fn ($query) => $query->where('budget_id', $request->integer('budget_id')))
+            ->when($request->filled('category'), fn ($query) => $query->where('category', $request->string('category')))
+            ->when($request->filled('from'), fn ($query) => $query->whereDate('expense_date', '>=', $request->date('from')))
+            ->when($request->filled('to'), fn ($query) => $query->whereDate('expense_date', '<=', $request->date('to')))
+            ->latest('expense_date')->paginate(15)->withQueryString();
 
-        return view('expenses.index', compact('expenses'));
+        return view('expenses.index', ['expenses' => $expenses, 'budgets' => Budget::orderBy('name')->get(), 'categories' => Expense::query()->distinct()->orderBy('category')->pluck('category')]);
     }
 
     public function create()

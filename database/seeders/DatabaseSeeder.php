@@ -21,11 +21,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::updateOrCreate(['email' => env('ADMIN_EMAIL', 'admin@example.com')], ['name' => env('ADMIN_NAME', 'Admin'), 'password' => env('ADMIN_PASSWORD', 'password'), 'role' => 'admin']);
-        $customers = [Customer::firstOrCreate(['email' => 'customer@example.com'], ['name' => 'Acme Retail']), Customer::firstOrCreate(['email' => 'second@example.com'], ['name' => 'Northwind Ltd']), Customer::firstOrCreate(['email' => 'third@example.com'], ['name' => 'Bharat Traders'])];
-        $supplier = Supplier::firstOrCreate(['email' => 'supplier@example.com'], ['name' => 'Global Supplies']);
+        $customers = [Customer::updateOrCreate(['email' => 'customer@example.com'], ['name' => 'Acme Retail', 'phone' => '+1 555 0101', 'address' => '1 Market Street']), Customer::updateOrCreate(['email' => 'second@example.com'], ['name' => 'Northwind Ltd', 'phone' => '+1 555 0102', 'address' => '2 River Road']), Customer::updateOrCreate(['email' => 'third@example.com'], ['name' => 'Bharat Traders', 'phone' => '+91 98765 43210', 'address' => '3 MG Road'])];
+        $supplier = Supplier::updateOrCreate(['email' => 'supplier@example.com'], ['name' => 'Global Supplies', 'phone' => '+1 555 0199', 'address' => '9 Supply Avenue']);
         Product::firstOrCreate(['name' => 'Consulting'], ['type' => 'service', 'unit_price' => 150, 'tax_rate' => 18]);
         Product::firstOrCreate(['name' => 'Office equipment'], ['type' => 'product', 'unit_price' => 500, 'tax_rate' => 18]);
         $budget = Budget::firstOrCreate(['name' => 'Operations '.now()->year], ['period_type' => 'yearly', 'category' => 'Operations', 'amount' => 10000, 'period_start' => now()->startOfYear(), 'period_end' => now()->endOfYear()]);
+        $monthlyBudget = Budget::firstOrCreate(['name' => 'Marketing '.now()->format('M Y')], ['period_type' => 'monthly', 'category' => 'Marketing', 'amount' => 2500, 'period_start' => now()->startOfMonth(), 'period_end' => now()->endOfMonth()]);
+        Expense::firstOrCreate(['budget_id' => $monthlyBudget->id, 'description' => 'Seed monthly campaign'], ['expense_date' => now()->startOfMonth()->addDays(2), 'amount' => 350, 'category' => 'Marketing']);
         $purchases = [];
         foreach (range(0, 8) as $index) {
             $date = now()->subMonths($index % 8)->startOfMonth()->addDays(5);
