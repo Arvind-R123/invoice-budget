@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('content')
 <h1>Reports</h1>
 <form class="row g-2 mb-4"><div class="col-md-4"><label>From</label><input type="date" name="from" class="form-control" value="{{ $from->toDateString() }}"></div><div class="col-md-4"><label>To</label><input type="date" name="to" class="form-control" value="{{ $to->toDateString() }}"></div><div class="col-md-2 align-self-end"><button class="btn btn-primary">Apply filters</button></div></form>
@@ -7,3 +7,4 @@
 </div>
 @endsection
 @push('scripts')<script src="https://cdn.jsdelivr.net/npm/chart.js"></script><script>function chart(id,type,labels,datasets,empty){if(!labels.length||datasets.every(d=>d.data.every(v=>Number(v)===0))){document.getElementById(id).classList.add('d-none');document.getElementById(empty).classList.remove('d-none');return}new Chart(document.getElementById(id),{type,data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true},title:{display:true,text:document.getElementById(id).closest('.card-body').querySelector('h2').textContent}}}})}chart('monthlyChart','bar',@json($months),[{label:'Sales',data:@json($monthlySales),backgroundColor:'#0d6efd'},{label:'Purchases',data:@json($monthlyPurchases),backgroundColor:'#6c757d'}],'monthlyEmpty');chart('statusChart','doughnut',@json($status->keys()->values()),[{label:'Amount',data:@json($status->pluck('amount')->values()),backgroundColor:['#198754','#ffc107','#dc3545']}],'statusEmpty');chart('budgetChart','bar',@json($budgetRows->pluck('name')->values()),[{label:'Budget',data:@json($budgetRows->pluck('budget')->values()),backgroundColor:'#0d6efd'},{label:'Actual',data:@json($budgetRows->pluck('actual')->values()),backgroundColor:'#dc3545'}],'budgetEmpty');chart('customerChart','bar',@json($customers->pluck('name')->values()),[{label:'Sales total',data:@json($customers->pluck('total')->values()),backgroundColor:'#198754'}],'customerEmpty');chart('expenseChart','pie',@json($categories->keys()->values()),[{label:'Expenses',data:@json($categories->values()),backgroundColor:['#0d6efd','#198754','#ffc107','#dc3545']}],'expenseEmpty');</script>@endpush
+
